@@ -1,1 +1,3 @@
 lib/__pycache__/
+lib/__pycache__/*
+lib/__pycache__/SakurajimaLIB.cpython-37.pyc
