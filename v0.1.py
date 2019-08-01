@@ -1,5 +1,6 @@
 # 通过密码的哈希算法产生的数列进行运算从而达到加密的效果
-import lib.SakurajimaLIB
+from lib.SakurajimaLIB import *
+import hashlib
 
 print ('''    ------------------------------------------------------------
     Hello, this Programma is used to Encrypt the File(Retain the
@@ -23,12 +24,15 @@ print ("    Now It is Going to Work:\n")
 
 file_len = os.path.getsize(theAddress)
 bar_thread = threading.Thread(target = Bars,args = (file_flag, file_len))
+bar_thread.setDaemon(True)
+bar_thread.start()
 
 while True:
     OneAdd = Mix_Two_Bytes(theOriginalFile.read(16),theMD5_bytes)
     if OneAdd==b'':
         break
     theFile.write(OneAdd)
+    file_flag[0]+=16
 
 theOriginalFile.close()
 theFile.close()

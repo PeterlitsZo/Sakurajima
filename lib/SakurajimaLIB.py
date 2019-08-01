@@ -1,7 +1,6 @@
 #hash:used to get MD5 list
 #os:used to get the size of file (to show the bar)
 #threading:used to show the bar
-import hashlib
 import os
 import threading
 import math
@@ -37,20 +36,21 @@ def Down_To_Next_Int(num):
     return math.ceil(num)-1;
 
 def Bit_Of_Num(num, bit):
-    if type(num)='float':
+    if type(num)==type(float()):
         num=Down_To_Next_Int(num)
-    return num//(10**(i-1))-num//(10**i)*10
+    return num//(10**(bit-1))-num//(10**bit)*10
 
-def Write_Bar (long, fillchar, times, endchar='\n'):
-    for i in range(long):
-        print (fillchar*times, sep='',end='')
-    print(endchar,sep='',end='')
+def Write_Bar (long, fillchar='-', times = 1, endchar='\n', bar_long= -1):
+    _sum = times*long
+    print (fillchar*(_sum), sep='',end='')
+    if bar_long >= long:
+        print (' '*(bar_long*times-_sum), sep='',end='')
+    print (endchar,sep='',end='')
 
-def Bars (flag, _len)
+def Bars (flag, _len):
     while True:
         rate = flag[0] / _len * 100
-        print("%-12.6f%%"%rate ,sep='|',end='')
-        Write_Bar(Bit_Of_Num(rate,2), '-', 2, '    ')
-        Write_Bar(Bit_Of_Num(rate,1), '-', 2, '')
-        print('\r')
+        print("%-12.6f%%|"%rate ,sep='|',end='')
+        Write_Bar(Bit_Of_Num(rate,2), '-', 2, '|    |',10)
+        Write_Bar(Bit_Of_Num(rate,1), '-', 2, '|\n',10)
 
