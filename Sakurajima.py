@@ -23,16 +23,16 @@ print ("\n    The MD5 of the Password is " + theMD5_bytes.hex() +".")
 print ("    Now It is Going to Work:\n")
 
 file_len = os.path.getsize(theAddress)
-bar_thread = threading.Thread(target = Bars,args = (file_flag, file_len))
+bar_thread = threading.Thread(target = QtBar,args = (file_flag, file_len))
 bar_thread.setDaemon(True)
 bar_thread.start()
 
 while True:
+    file_flag[0]+=16
     OneAdd = Mix_Two_Bytes(theOriginalFile.read(16),theMD5_bytes)
     if OneAdd==b'':
         break
     theFile.write(OneAdd)
-    file_flag[0]+=16
 
 theOriginalFile.close()
 theFile.close()

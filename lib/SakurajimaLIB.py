@@ -4,6 +4,7 @@
 import os
 import threading
 import math
+import time
 
 theMD5_of_Peterlits = \
     b'\xa2\x44\xd2\xc5\x45\x70\x7d\x00\x84\x13\x82\x2a\xa3\x74\xcf\xab'
@@ -53,4 +54,38 @@ def Bars (flag, _len):
         print("%-12.6f%%|"%rate ,sep='|',end='')
         Write_Bar(Bit_Of_Num(rate,2), '-', 2, '|    |',10)
         Write_Bar(Bit_Of_Num(rate,1), '-', 2, '|\n',10)
+        time.sleep(1)
 
+from PyQt5.QtWidgets import QProgressBar, QWidget, QApplication
+from PyQt5.QtCore import QTimer
+def QtBar (_flag, _len):
+    class BarWidgets(QWidget):
+        def __init__(self, flag_, len_, parent= None):
+            super().__init__()
+            self.setGeometry(517,75,517,75)
+            self.setWindowTitle('QtBar')
+            self.pbar = QProgressBar(self)
+            self.pbar.setTextVisible(False)
+            self.pbar.setGeometry(25, 25, 467, 25)
+
+            self.flag = flag_
+            self.len = len_
+            self.setMax_(self.len)
+            
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(self.antoSetValue_)
+            self.timer.start(25)
+            
+            self.show()
+        def setValue_(self, value):
+            self.pbar.setValue(value)
+        def setMax_(self, value):
+            self.pbar.setMaximum(value)
+            
+        def antoSetValue_(self):
+            self.setValue_(self.flag[0])
+            
+    app = QApplication([''])
+    __qtbar = BarWidgets(_flag,_len)
+    
+    app.exec_()
