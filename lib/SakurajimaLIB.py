@@ -58,7 +58,7 @@ def Bars (flag, _len):
 
 from PyQt5.QtWidgets import QProgressBar, QWidget, QApplication
 from PyQt5.QtCore import QTimer
-def QtBar (_flag, _len):
+def QtBar (_flag, _len, app):
     class BarWidgets(QWidget):
         def __init__(self, flag_, len_, parent= None):
             super().__init__()
@@ -85,7 +85,6 @@ def QtBar (_flag, _len):
         def antoSetValue_(self):
             self.setValue_(self.flag[0])
             
-    app = QApplication([''])
     __qtbar = BarWidgets(_flag,_len)
     
     app.exec_()

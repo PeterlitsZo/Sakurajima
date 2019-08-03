@@ -23,7 +23,8 @@ print ("\n    The MD5 of the Password is " + theMD5_bytes.hex() +".")
 print ("    Now It is Going to Work:\n")
 
 file_len = os.path.getsize(theAddress)
-bar_thread = threading.Thread(target = QtBar,args = (file_flag, file_len))
+app = QApplication([''])
+bar_thread = threading.Thread(target = QtBar,args = (file_flag, file_len, app))
 bar_thread.setDaemon(True)
 bar_thread.start()
 
